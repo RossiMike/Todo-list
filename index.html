@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <div class="container">
+        <h1>Task Manager</h1>
+
+        <!-- Task input section: used to add new tasks -->
+        <div class="task-input">
+            <input type="text" id="taskDescription" placeholder="Enter task description" />
+            <button id="addTaskButton">Add Task</button>
+        </div>
+
+        <!-- Task filter section: used to filter and sort tasks -->
+        <div class="task-filter">
+            <button id="showAllTasksButton">Show All Tasks</button>
+            <button id="showCompletedTasksButton">Show Completed Tasks</button>
+            <button id="sortTasksByCompletedButton">Sort Tasks by Completed</button>
+        </div>
+
+
+        <!-- Task report section: used to generate a task report -->
+        <div class="task-report">
+            <button id="generateReportButton">Generate Task Report</button>
+            <div id="taskReport"></div>
+        </div>
+
+        <!-- Task list section: used to display the list of tasks -->
+        <div class="task-list">
+            <ul id="taskList"></ul>
+        </div>
+    </div>
+
+    <!-- Link to the JavaScript file -->
+    <script src="script.js"></script>
+</body>
+
+</html>

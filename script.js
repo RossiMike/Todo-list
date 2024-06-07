@@ -61,7 +61,7 @@ function displayTasks(filteredTasks = tasks) {
     //create a select element
     const taskProgress = document.createElement("select");
     createProgressOptions(task.progress).forEach((element) => taskProgress.add(element));
-    taskProgress.addEventListener("change", function(){
+    taskProgress.addEventListener("change", function () {
       updateTaskProgress(task.id, taskProgress.value);
       displayTasks();
     });
@@ -70,21 +70,23 @@ function displayTasks(filteredTasks = tasks) {
     const completeButton = document.createElement("button");
     completeButton.className = "complete-button";
     completeButton.textContent = task.completed ? "Uncomplete" : "Complete";
-    completeButton.addEventListener("click", function(){toggleTaskCompletion(task.id);
-      
+    completeButton.addEventListener("click", function () {
+      toggleTaskCompletion(task.id);
+
     });
 
     //create delete button
     const deleteButton = document.createElement("button");
     deleteButton.className = "delete-button";
     deleteButton.textContent = "Delete";
-    deleteButton.addEventListener("click" ,function(){deleteTask(task.id);})
+    deleteButton.addEventListener("click", function () { deleteTask(task.id); })
 
     //create the update description button
     const updateDescriptionButton = document.createElement("button");
     updateDescriptionButton.className = "update-description-button";
     updateDescriptionButton.textContent = "Update Description";
-    updateDescriptionButton.addEventListener("click", function(){promptUpdateDescription(task.id);
+    updateDescriptionButton.addEventListener("click", function () {
+      promptUpdateDescription(task.id);
       displayTasks();
     })
 
@@ -98,6 +100,13 @@ function displayTasks(filteredTasks = tasks) {
     //append elements to the taskList
     const taskList = document.getElementById("taskList");
     taskList.appendChild(taskItem);
+
+    //regenerages the taskReport if it is already showed 
+    if (document.getElementById("taskReport").childElementCount > 0 ){
+      generateTaskReport();
+    }
+
+    
   });
 }
 
@@ -114,18 +123,18 @@ function completeTask(id) {
 
 // This function toggles the completed status of a task.
 function toggleTaskCompletion(id) {
-  if (tasks.length<1){
+  if (tasks.length < 1) {
     return
   }
   const task = tasks.find((task) => task.id === id);
   if (task) {
-    task.completed = !task.completed;    
-    saveTasksToLocalStorage();  
+    task.completed = !task.completed;
+    saveTasksToLocalStorage();
   } else {
     console.log("Task not found");
   }
   displayTasks();
-  
+
 }
 
 // This function removes a task by its ID from the tasks array.
@@ -176,14 +185,14 @@ function generateTaskReport() {
   const totalTasks = tasks.length;
   const completedTasks = tasks.filter((task) => task.completed).length;
   const remainingTasks = totalTasks - completedTasks;
-  // You will modify this function in Task 9 to produce HTML output instead of logging to the console.
+  // This function produces HTML output
   document.getElementById("taskReport").innerHTML = "";
   let paragraph = document.createElement("p");
   paragraph.textContent = `Total Tasks: ${totalTasks}, Completed Tasks: ${completedTasks}, Remaining Tasks: ${remainingTasks}`;
   document.getElementById("taskReport").appendChild(paragraph);
 }
 
-// Gives functionality to add task button
+// Gives functionality to addtask button
 document.getElementById("addTaskButton").addEventListener("click", function () {
   let inputField = document.getElementById("taskDescription");
   if (inputField.value !== "") {
@@ -194,27 +203,27 @@ document.getElementById("addTaskButton").addEventListener("click", function () {
 })
 
 // Gives functionality to show-all-button
-document.getElementById("showAllTasksButton").addEventListener("click", function(){
-  if (document.getElementById("taskList").innerHTML === ""){
+document.getElementById("showAllTasksButton").addEventListener("click", function () {
+  if (document.getElementById("taskList").innerHTML === "") {
     document.getElementById("showAllTasksButton").textContent = "Unshow All Tasks";
     displayTasks();
-  }else{
-    document.getElementById("showAllTasksButton").textContent ="Show All Tasks";
+  } else {
+    document.getElementById("showAllTasksButton").textContent = "Show All Tasks";
     document.getElementById("taskList").innerHTML = ""
   }
 });
 
 // Gives functionality to button show all completed tasks
-document.getElementById("showCompletedTasksButton").addEventListener("click", function(){displayTasks(filterCompletedTasks())});
+document.getElementById("showCompletedTasksButton").addEventListener("click", function () { displayTasks(filterCompletedTasks()) });
 
 // Gives functionality to button sortTasksByCompletedButton
-document.getElementById("sortTasksByCompletedButton").addEventListener("click", function(){displayTasks(sortTasksByCompleted())});
+document.getElementById("sortTasksByCompletedButton").addEventListener("click", function () { displayTasks(sortTasksByCompleted()) });
 
 // Gives functionality to buton generatReportButton
-document.getElementById("generateReportButton").addEventListener("click", function(){
-  if (document.getElementById("taskReport").innerHTML ===""){
-  generateTaskReport();
-}else{
-  document.getElementById("taskReport").innerHTML ="";
-}
+document.getElementById("generateReportButton").addEventListener("click", function () {
+  if (document.getElementById("taskReport").innerHTML === "") {
+    generateTaskReport();
+  } else {
+    document.getElementById("taskReport").innerHTML = "";
+  }
 });

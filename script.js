@@ -63,7 +63,6 @@ function displayTasks(filteredTasks = tasks) {
     createProgressOptions(task.progress).forEach((element) => taskProgress.add(element));
     taskProgress.addEventListener("change", function(){
       updateTaskProgress(task.id, taskProgress.value);
-      taskProgress.options[0].selected = true;
       displayTasks();
     });
 

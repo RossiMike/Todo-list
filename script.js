@@ -24,6 +24,8 @@ function addTask(description) {
     description: description,
     completed: false,
     progress: "not started",
+    timeStamp: currentTime(),
+    date: currentDate()
   };
   tasks.push(newTask);
   saveTasksToLocalStorage();
@@ -56,7 +58,7 @@ function displayTasks(filteredTasks = tasks) {
 
     //create a span for the task description and progress
     const taskDescription = document.createElement("span");
-    taskDescription.textContent = `${task.description} - ${task.progress}`;
+    taskDescription.textContent = `${task.description} - ${task.progress} - ${task.timeStamp} - ${task.date}`;
 
     //create a select element
     const taskProgress = document.createElement("select");
@@ -102,11 +104,11 @@ function displayTasks(filteredTasks = tasks) {
     taskList.appendChild(taskItem);
 
     //regenerages the taskReport if it is already showed 
-    if (document.getElementById("taskReport").childElementCount > 0 ){
+    if (document.getElementById("taskReport").childElementCount > 0) {
       generateTaskReport();
     }
 
-    
+
   });
 }
 
@@ -227,3 +229,39 @@ document.getElementById("generateReportButton").addEventListener("click", functi
     document.getElementById("taskReport").innerHTML = "";
   }
 });
+
+// This function sets a clock at clock div (date and time)
+function clock() {
+  document.getElementById('current-date').innerHTML = currentDate();
+  document.getElementById('current-time').innerHTML = currentTime();
+  setTimeout(clock, 1000);
+}
+
+// This function adds zero in front of numbers < 10
+function checkTime(i) {
+  if (i < 10) { i = "0" + i };
+  return i;
+}
+
+function currentDate() {
+  const today = new Date();
+  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  let day = days[today.getDay()];
+  let date = today.getDate();
+  let month = today.getMonth();
+  let year = today.getFullYear();
+  return day + " " + date + "/" + month + "/" + year;
+}
+
+function currentTime() {
+  const today = new Date();
+  let hour = today.getHours();
+  let minute = today.getMinutes();
+  let second = today.getSeconds();
+  hour = checkTime(hour);
+  minute = checkTime(minute);
+  second = checkTime(second);
+  return hour + ":" + minute + ":" + second;
+}
+
+clock()

@@ -46,7 +46,9 @@ function createProgressOptions(selectedValue) {
 function fillDivs(task, type, div1, div2) {
   //create a span for the task description and progress
   const taskDescription = document.createElement("span");
-  taskDescription.textContent = `${task.description} - ${task.progress}`;
+  taskDescription.textContent = task.description + " ";
+  const taskCondition = document.createElement("span");
+  taskCondition.textContent = task.progress;
   // //create a select element
   const taskProgress = document.createElement("select");
   createProgressOptions(task.progress).forEach((element) => taskProgress.add(element));
@@ -103,11 +105,11 @@ function fillDivs(task, type, div1, div2) {
 
   //returns a list with all information 
   if (type === "all") {
-    return [taskDescription, taskProgress, completeButton, deleteButton, updateDescriptionButton, lessButton, timeInfo];
+    return [taskDescription, taskCondition, taskProgress, completeButton, deleteButton, updateDescriptionButton, lessButton, timeInfo];
   }
 
   //returns a list with important information 
-  return [taskDescription, taskProgress, completeButton, deleteButton, updateDescriptionButton, moreButton];
+  return [taskDescription, taskCondition, taskProgress, completeButton, deleteButton, updateDescriptionButton, moreButton];
 
 }
 
@@ -252,7 +254,7 @@ document.getElementById("addTaskButton").addEventListener("click", function () {
 // Gives functionality to show-all-button
 document.getElementById("showAllTasksButton").addEventListener("click", function () {
   if (document.getElementById("taskList").innerHTML === "") {
-    document.getElementById("showAllTasksButton").textContent = "Unshow All Tasks";
+    document.getElementById("showAllTasksButton").textContent = "Hide All Tasks";
     displayTasks();
   } else {
     document.getElementById("showAllTasksButton").textContent = "Show All Tasks";
@@ -291,7 +293,6 @@ function checkTime(i) {
 function currentDate() {
   const today = new Date();
   const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  console.log(today.getDay())
   let day = days[today.getDay()];
   let date = today.getDate();
   let month = today.getMonth() + 1;
@@ -311,3 +312,4 @@ function currentTime() {
 }
 
 clock()
+

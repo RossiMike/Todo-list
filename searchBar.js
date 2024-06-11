@@ -1,7 +1,10 @@
+// sets functionality to Search bar
 document.getElementById('search-bar').addEventListener("keyup", function(){
-    myFunction()
+    search()
   })
-  function myFunction() {
+
+  // search items from taskList
+  function search() {
     displayTasks()
     // Declare variables
     var input, filter, ul, li, a, i, txtValue;

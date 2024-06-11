@@ -48,6 +48,12 @@ h1 {
     background-color: #218838;
 }
 
+.task-filter input{
+    display:flex;
+    justify-content: space-between;
+    margin: 20px auto;
+
+}
 .task-filter,
 .task-report {
     text-align: center;

@@ -93,11 +93,6 @@ h1 {
     background-color: #d4edda;
 }
 
-.task-list div {
-    display: flex;
-    gap: 5px;
-}
-
 .task-list button {
     background-color: #dc3545;
     color: white;

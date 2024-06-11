@@ -43,31 +43,17 @@ function createProgressOptions(selectedValue) {
   });
 }
 
-// This function iterates over the tasks array and logs task details to the console.
-function displayTasks(filteredTasks = tasks) {
-
-  // Clears the area where the tasks are showed
-  document.getElementById("taskList").innerHTML = "";
-
-  // Creates all the elements that will be showed in the task area
-  filteredTasks.forEach((task) => {
-
-    //create list item for the task
-    const taskItem = document.createElement("li");
-    taskItem.className = task.complete ? "completed" : "";
-
+function fillDivs(task, type, div1, div2){
     //create a span for the task description and progress
     const taskDescription = document.createElement("span");
-    taskDescription.textContent = `${task.description} - ${task.progress} - ${task.timeStamp} - ${task.date}`;
-
-    //create a select element
+    taskDescription.textContent = `${task.description} - ${task.progress}`;
+    // //create a select element
     const taskProgress = document.createElement("select");
     createProgressOptions(task.progress).forEach((element) => taskProgress.add(element));
     taskProgress.addEventListener("change", function () {
       updateTaskProgress(task.id, taskProgress.value);
       displayTasks();
     });
-
     //create the complete button
     const completeButton = document.createElement("button");
     completeButton.className = "complete-button";
@@ -89,15 +75,77 @@ function displayTasks(filteredTasks = tasks) {
     updateDescriptionButton.textContent = "Update Description";
     updateDescriptionButton.addEventListener("click", function () {
       promptUpdateDescription(task.id);
-      displayTasks();
+    displayTasks();
     })
 
-    //append elements to the task item
-    taskItem.appendChild(taskDescription);
-    taskItem.appendChild(completeButton);
-    taskItem.appendChild(deleteButton);
-    taskItem.appendChild(updateDescriptionButton);
-    taskItem.appendChild(taskProgress);
+    //create the Show more button
+    const moreButton = document.createElement("button");
+    moreButton.className = "more-button";
+    moreButton.textContent = "Show more";
+    moreButton.addEventListener("click", function(){
+        div2.style.display = "block";
+        div1.style.display = "none"; 
+    } )
+
+    //create the Show less button
+    const lessButton = document.createElement("button");
+    lessButton.className = "less-button";
+    lessButton.textContent = "Show less";
+    lessButton.addEventListener("click", function(){
+        div1.style.display = "block";
+        div2.style.display = "none"; 
+    } )
+
+    //create a span for the time info 
+    const timeInfo = document.createElement("Span");
+    timeInfo.textContent= `Date started: ${task.date} - Time started: ${task.timeStamp}`;
+    timeInfo.style.display = "block";
+
+    //returns a list with all information 
+    if (type === "all"){
+        return [taskDescription, taskProgress, completeButton, deleteButton, updateDescriptionButton, lessButton, timeInfo];
+    }
+
+    //returns a list with important information 
+    return [taskDescription, taskProgress, completeButton, deleteButton, updateDescriptionButton, moreButton];
+
+}
+
+// This function iterates over the tasks array and logs task details to the console.
+function displayTasks(filteredTasks = tasks) {
+
+  // Clears the area where the tasks are showed
+  document.getElementById("taskList").innerHTML = "";
+
+  // Creates all the elements that will be showed in the task area
+  filteredTasks.forEach((task) => {
+
+    //create list item for the task
+    const taskItem = document.createElement("li");
+    taskItem.className = task.complete ? "completed" : "";
+
+    //create div with important info
+    const importantInfo = document.createElement("div");
+    importantInfo.className = "divImp";
+    // create div with important info and general
+    const allInfo = document.createElement("div");
+    allInfo.className = "divGen";
+    allInfo.style.display = "none";
+
+ 
+    //append elements to the importantInfo item
+    for (item of fillDivs(task, "", importantInfo, allInfo)){
+        importantInfo.appendChild(item);
+    }
+
+    //append elements to the allInfo item
+    for (item of fillDivs(task, "all", importantInfo, allInfo)){
+        allInfo.appendChild(item);
+    }
+
+    // append elements to taskItem
+    taskItem.appendChild(allInfo);
+    taskItem.appendChild(importantInfo);
 
     //append elements to the taskList
     const taskList = document.getElementById("taskList");

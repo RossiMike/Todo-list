@@ -43,71 +43,71 @@ function createProgressOptions(selectedValue) {
   });
 }
 
-function fillDivs(task, type, div1, div2){
-    //create a span for the task description and progress
-    const taskDescription = document.createElement("span");
-    taskDescription.textContent = `${task.description} - ${task.progress}`;
-    // //create a select element
-    const taskProgress = document.createElement("select");
-    createProgressOptions(task.progress).forEach((element) => taskProgress.add(element));
-    taskProgress.addEventListener("change", function () {
-      updateTaskProgress(task.id, taskProgress.value);
-      displayTasks();
-    });
-    //create the complete button
-    const completeButton = document.createElement("button");
-    completeButton.className = "complete-button";
-    completeButton.textContent = task.completed ? "Uncomplete" : "Complete";
-    completeButton.addEventListener("click", function () {
-      toggleTaskCompletion(task.id);
-
-    });
-
-    //create delete button
-    const deleteButton = document.createElement("button");
-    deleteButton.className = "delete-button";
-    deleteButton.textContent = "Delete";
-    deleteButton.addEventListener("click", function () { deleteTask(task.id); })
-
-    //create the update description button
-    const updateDescriptionButton = document.createElement("button");
-    updateDescriptionButton.className = "update-description-button";
-    updateDescriptionButton.textContent = "Update Description";
-    updateDescriptionButton.addEventListener("click", function () {
-      promptUpdateDescription(task.id);
+function fillDivs(task, type, div1, div2) {
+  //create a span for the task description and progress
+  const taskDescription = document.createElement("span");
+  taskDescription.textContent = `${task.description} - ${task.progress}`;
+  // //create a select element
+  const taskProgress = document.createElement("select");
+  createProgressOptions(task.progress).forEach((element) => taskProgress.add(element));
+  taskProgress.addEventListener("change", function () {
+    updateTaskProgress(task.id, taskProgress.value);
     displayTasks();
-    })
+  });
+  //create the complete button
+  const completeButton = document.createElement("button");
+  completeButton.className = "complete-button";
+  completeButton.textContent = task.completed ? "Uncomplete" : "Complete";
+  completeButton.addEventListener("click", function () {
+    toggleTaskCompletion(task.id);
 
-    //create the Show more button
-    const moreButton = document.createElement("button");
-    moreButton.className = "more-button";
-    moreButton.textContent = "Show more";
-    moreButton.addEventListener("click", function(){
-        div2.style.display = "block";
-        div1.style.display = "none"; 
-    } )
+  });
 
-    //create the Show less button
-    const lessButton = document.createElement("button");
-    lessButton.className = "less-button";
-    lessButton.textContent = "Show less";
-    lessButton.addEventListener("click", function(){
-        div1.style.display = "block";
-        div2.style.display = "none"; 
-    } )
+  //create delete button
+  const deleteButton = document.createElement("button");
+  deleteButton.className = "delete-button";
+  deleteButton.textContent = "Delete";
+  deleteButton.addEventListener("click", function () { deleteTask(task.id); })
 
-    //create a span for the time info 
-    const timeInfo = document.createElement("Span");
-    timeInfo.textContent= `Date started: ${task.date} - Time started: ${task.timeStamp}`;
-    timeInfo.style.display = "block";
+  //create the update description button
+  const updateDescriptionButton = document.createElement("button");
+  updateDescriptionButton.className = "update-description-button";
+  updateDescriptionButton.textContent = "Update Description";
+  updateDescriptionButton.addEventListener("click", function () {
+    promptUpdateDescription(task.id);
+    displayTasks();
+  })
 
-    //returns a list with all information 
-    if (type === "all"){
-        return [taskDescription, taskProgress, completeButton, deleteButton, updateDescriptionButton, lessButton, timeInfo];
-    }
+  //create the Show more button
+  const moreButton = document.createElement("button");
+  moreButton.className = "more-button";
+  moreButton.textContent = "Show more";
+  moreButton.addEventListener("click", function () {
+    div2.style.display = "block";
+    div1.style.display = "none";
+  })
 
-    //returns a list with important information 
-    return [taskDescription, taskProgress, completeButton, deleteButton, updateDescriptionButton, moreButton];
+  //create the Show less button
+  const lessButton = document.createElement("button");
+  lessButton.className = "less-button";
+  lessButton.textContent = "Show less";
+  lessButton.addEventListener("click", function () {
+    div1.style.display = "block";
+    div2.style.display = "none";
+  })
+
+  //create a span for the time info 
+  const timeInfo = document.createElement("Span");
+  timeInfo.textContent = `Date started: ${task.date} - Time started: ${task.timeStamp}`;
+  timeInfo.style.display = "block";
+
+  //returns a list with all information 
+  if (type === "all") {
+    return [taskDescription, taskProgress, completeButton, deleteButton, updateDescriptionButton, lessButton, timeInfo];
+  }
+
+  //returns a list with important information 
+  return [taskDescription, taskProgress, completeButton, deleteButton, updateDescriptionButton, moreButton];
 
 }
 
@@ -127,20 +127,20 @@ function displayTasks(filteredTasks = tasks) {
     //create div with important info
     const importantInfo = document.createElement("div");
     importantInfo.className = "divImp";
+    
     // create div with important info and general
     const allInfo = document.createElement("div");
     allInfo.className = "divGen";
     allInfo.style.display = "none";
 
- 
     //append elements to the importantInfo item
-    for (item of fillDivs(task, "", importantInfo, allInfo)){
-        importantInfo.appendChild(item);
+    for (item of fillDivs(task, "", importantInfo, allInfo)) {
+      importantInfo.appendChild(item);
     }
 
     //append elements to the allInfo item
-    for (item of fillDivs(task, "all", importantInfo, allInfo)){
-        allInfo.appendChild(item);
+    for (item of fillDivs(task, "all", importantInfo, allInfo)) {
+      allInfo.appendChild(item);
     }
 
     // append elements to taskItem
@@ -155,8 +155,6 @@ function displayTasks(filteredTasks = tasks) {
     if (document.getElementById("taskReport").childElementCount > 0) {
       generateTaskReport();
     }
-
-
   });
 }
 
@@ -184,7 +182,6 @@ function toggleTaskCompletion(id) {
     console.log("Task not found");
   }
   displayTasks();
-
 }
 
 // This function removes a task by its ID from the tasks array.
@@ -294,9 +291,10 @@ function checkTime(i) {
 function currentDate() {
   const today = new Date();
   const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  console.log(today.getDay())
   let day = days[today.getDay()];
   let date = today.getDate();
-  let month = today.getMonth();
+  let month = today.getMonth() + 1;
   let year = today.getFullYear();
   return day + " " + date + "/" + month + "/" + year;
 }
